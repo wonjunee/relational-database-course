@@ -4,10 +4,22 @@ conn = sqlite3.connect("cookies")
 
 c = conn.cursor()
 
-query = "select name, id from students order by students.name;"
+# query = "select name, id from students order by students.name;"
+# c.execute(query)
+
+query = """
+DROP TABLE IF EXISTS `document_contents`;
+"""
 c.execute(query)
 
-query = "INSERT INTO cookies VALUES (1,2,3);"
+query ="""
+CREATE TABLE `document_contents` (
+  `id` int(11) NOT NULL,
+  `document_id` int(11) DEFAULT NULL,
+  `body` text,
+  PRIMARY KEY (`id`)
+);
+"""
 c.execute(query)
 
 rows = c.fetchall()
