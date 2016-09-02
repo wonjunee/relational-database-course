@@ -13,13 +13,27 @@ DROP TABLE IF EXISTS `document_contents`;
 c.execute(query)
 
 query ="""
-CREATE TABLE `document_contents` (
-  `id` int(11) NOT NULL,
-  `document_id` int(11) DEFAULT NULL,
-  `body` text,
-  PRIMARY KEY (`id`)
+CREATE TABLE document_contents (
+  id int(11) NOT NULL,
+  document_id int(11) DEFAULT NULL,
+  body text,
+  PRIMARY KEY (id)
 );
 """
+c.execute(query)
+
+for i in range(10):
+	query = """
+	INSERT INTO document_contents
+	VALUES ({}, {}, 'what up {}');
+	""".format(i, i*2, i)
+	c.execute(query)
+conn.commit()
+
+query = """
+SELECT * FROM document_contents;
+"""
+
 c.execute(query)
 
 rows = c.fetchall()
@@ -30,8 +44,8 @@ print rows
 
 # And let's loop over it too:
 print
-print "Student names:"
+print "i:"
 for row in rows:
   print "  ", row[0]
 
-db.close()
+conn.close()
